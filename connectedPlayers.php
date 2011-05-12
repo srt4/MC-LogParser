@@ -9,7 +9,7 @@ $Start = getTime();
 <?php
 
 // McLogParser - 4/20/2011 by Spencer <srt4@uw.edu>
-
+$root = $_SERVER['DOCUMENT_ROOT'];
 // open the sqlite database
 $db = sqlite_open('logfiles/Sessions.db', 0777, $dberr);
 
@@ -34,12 +34,12 @@ function checkIfUpdate($db) {
             $login_time = $line_array[1];
             $logmax = strtotime($login_date . $login_time);
             if ($logmax>$dbmax) {
-                $process_array;
+	        $process_array;
                 // create a new array from the breakpoint to the end of the logfile
                 for($j = $i-10; $j < count($lines); $j++) {
                     $process_array[] = $lines[$j];
                 }
-                parseLog($db, $process_array);
+                parseLog($db, $lines);
                 break;
             }
             break;
